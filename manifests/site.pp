@@ -429,43 +429,7 @@ node webserver-lan {
   #  path    => '/usr/local/bin/:/bin/',
   #}
 
-# NOTE Backup block for hosted websites
-  cron::daily { 'web-soporte-to-fileserver':
-    ensure      => 'absent',
-    minute      => '10',
-    hour        => '17',
-    user        => 'root',
-    command     => 'tar cfz /var/share/backup-drive/web-soporte-files/backup-web-soporte-$(date +\%Y\%m\%d-\%H\%M\%S).tar.gz -C /var/www/soporte.cecmed.local/ .',
-    environment => ['MAILTO=root,ale@cecmed.cu,carmen@cecmed.cu,joseyong@cecmed.cu'],
-  }
-
-  cron::daily { 'new-intranet-to-fileserver':
-    ensure      => 'absent',
-    minute      => '00',
-    hour        => '17',
-    user        => 'root',
-    command     => 'tar cfz /var/share/backup-drive/new-intranet/backup-new-intranet-$(date +\%Y\%m\%d-\%H\%M\%S).tar.gz -C /var/www/intranet-new.cecmed.local/ .',
-    environment => ['MAILTO=root,ale@cecmed.cu,carmen@cecmed.cu,joseyong@cecmed.cu'],
-  }
-
-  cron::daily { 'old-intranet-to-fileserver':
-    ensure      => 'absent',
-    minute      => '20',
-    hour        => '17',
-    user        => 'root',
-    command     => 'tar cfz /var/share/backup-drive/old-intranet/backup-old-intranet-$(date +\%Y\%m\%d-\%H\%M\%S).tar.gz -C /var/www/intranet.cecmed.local/ .',
-    environment => ['MAILTO=root,ale@cecmed.cu,carmen@cecmed.cu,joseyong@cecmed.cu'],
-  }
-
-  cron::daily { 'web-calidad-to-fileserver':
-    ensure      => 'absent',
-    minute      => '20',
-    hour        => '17',
-    user        => 'root',
-    command     => 'tar cfz /var/share/backup-drive/web-calidad/backup-web-calidad-$(date +\%Y\%m\%d-\%H\%M\%S).tar.gz -C /var/www/calidad.cecmed.local/ .',
-    environment => ['MAILTO=root,ale@cecmed.cu,carmen@cecmed.cu,joseyong@cecmed.cu'],
-  }
-
+# NOTE Backup block for hosted webs
   cron::job::multiple { 'backup-cron-jobs':
     ensure      => 'present',
     jobs        => [
